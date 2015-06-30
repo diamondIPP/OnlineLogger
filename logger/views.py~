@@ -1,0 +1,12 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import RunInfo
+
+def index(request):
+    return HttpResponse("hello world!")
+
+def detail(request, runnr):
+    info = RunInfo.objects.get(pk=runnr)
+    return HttpResponse("got the info")
+
+    
