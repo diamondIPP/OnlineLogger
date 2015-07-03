@@ -1,13 +1,25 @@
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
+
+def getPrevRunNumber():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        runnr = pentry[len(pentry)-1].runnr + 1
+        return runnr
+    else:
+        return 1
 
 class RunInfo(models.Model):
-    persons = models.CharField("Persons on shift: ", max_length=200)
-    runnr = models.PositiveIntegerField("Run number: ", default =0)
-    date = models.DateField("Date: ", default=timezone.now)
-    time = models.TimeField("Time: ", default=timezone.now)
-    comments = models.TextField("Comments: ", default="")
+    ZERO = timedelta(0)
+    persons = models.CharField("Persons on shift ", max_length=200, blank=False)
+    runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
+    starttime0 = models.DateTimeField("Run start time ", default=timezone.now(), blank=False)
+    starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
+    starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
+    endtime = models.DateTimeField("Run stop time ", default=0, blank=False)
+    comments = models.TextField("Comments ", blank=True)
     TEST = 'test'
     SIGNAL = 'signal'
     PEDESTAL = 'pedestal'
@@ -16,22 +28,25 @@ class RunInfo(models.Model):
         (SIGNAL, 'signal'),
         (PEDESTAL, 'pedestal'),
         )
-    runtype = models.CharField(max_length=10, choices=RUN_TYPES, default=TEST)
-    maskfile = models.CharField("Mask file: ", max_length=200, default = "")
-    dia1 = models.CharField("Diamond 1: ", max_length=200, default = "")
-    dia2 = models.CharField("Diamond 2: ", max_length=200, default = "")
-    dia1hv = models.CharField("Diamond 1 high voltage: ", max_length=200, default = "")
-    dia2hv = models.CharField("Diamond 2 high voltage: ", max_length=200, default = "")
-    fs11 = models.IntegerField("FS11 setting: ", default = 0)
-    fs13 = models.IntegerField("FS13 setting: ", default = 0)
-    quadrupole = models.IntegerField("Quadrupole setting in %: ", default= 100)
-    rawrate = models.PositiveIntegerField("Raw rate in Hz: ", default = 0)
-    prescaledrate = models.PositiveIntegerField("Prescaled rate in Hz: ", default = 0)
-    TLUrate = models.PositiveIntegerField("TLU rate in Hz: ", default = 0)
-    pulserrate = models.PositiveIntegerField("Pulser rate in Hz: ", default = 0)
-    aimedflux = models.PositiveIntegerField("Aimed flux: ", default = 0)
-    measuredflux = models.PositiveIntegerField("Measured flux: ", default = 0)
+    runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, blank=False)
+    maskfile = models.CharField("Mask file ", max_length=200, blank=False)
+    dia1 = models.CharField("Diamond 1 ", max_length=200, default = "", blank=False)
+    dia2 = models.CharField("Diamond 2 ", max_length=200, default = "", blank=False)
+    dia1hv = models.IntegerField("Diamond 1 high voltage [V] ", blank=False)
+    dia2hv = models.IntegerField("Diamond 2 high voltage [V] ", blank=False)
+    fs11 = models.IntegerField("FS11 setting [mm] ", blank=False)
+    fs13 = models.IntegerField("FS13 setting [mm] ", blank=False)
+    quadrupole = models.IntegerField("Quadrupole setting [%] ", blank=False)
+    rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
+    prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
+    TLUrate = models.PositiveIntegerField("TLU rate [Hz] ", blank=False)
+    pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
+    aimedflux = models.PositiveIntegerField("Aimed flux [kHz]", blank=False)
+    measuredflux = models.PositiveIntegerField("Measured flux [kHz] ", blank=False)
 
     def __unicode__(self):
         return str(self.runnr)
+    
+
+
     
