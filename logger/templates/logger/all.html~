@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <th>Field 1</th>
+        ...
+        <th>Field N</th>
+    </tr>
+    {% for item in entry_list %}
+    <tr> 
+        <td>{{ item.persons }}</td>
+        ...
+        <td>{{ item.persons }}</td>
+    </tr>
+    {% endfor %}
+</table>

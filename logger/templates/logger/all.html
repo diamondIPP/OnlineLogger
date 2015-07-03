@@ -1,0 +1,25 @@
+<font face="helvetica">
+{% for item in results %}
+<b><font color="red">Run: {{item.runnr}}</font></b><br>
+Persons on shift: {{item.persons}} <br>
+Date: {{item.date}} <br>
+Time: {{item.time}} <br>
+Comments: {{item.comments}} <br>
+Type of run: {{item.runtype}} <br>
+Maskfile: {{item.maksfile}} <br>
+Diamond 1: {{item.dia1}} <br>
+Diamond 2: {{item.dia2}} <br>
+HV Diamond 1: {{item.dia1hv}} <br>
+HV Diamond 2: {{item.dia2hv}} <br>
+FS11: {{item.fs11}} <br>
+FS13: {{item.fs13}} <br>
+Quadrupole settings: {{item.quadrupole}} <br>
+Raw rate: {{item.rawrate}} <br>
+Prescaled rate: {{item.prescaledrate}} <br>
+TLU rate: {{item.TLUrate}} <br>
+Pulser rate: {{item.pulserrate}} <br>
+Aimed flux: {{item.aimedflux}} <br>
+Measured flux: {{item.measuredflux}} <br>
+<br><br>
+{% endfor %}
+</font>

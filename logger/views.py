@@ -9,4 +9,7 @@ def detail(request, runnr):
     info = get_object_or_404(RunInfo, pk=runnr)
     return render(request, 'logger/detail.html', {'info':info})
 
+def all(request):
+    results = list(RunInfo.objects.all())
+    return render(request, 'logger/all.html', {'results':results})
     
