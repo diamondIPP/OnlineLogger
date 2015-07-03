@@ -6,14 +6,23 @@ from datetime import timedelta
 def getPrevRunNumber():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
-        runnr = pentry[len(pentry)-1].runnr + 1
-        return runnr
-    else:
-        return 1
+        return (pentry[len(pentry)-1].runnr + 1)
+    return 1
+
+
+def getPrevPersons():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].persons
+    return
+
+def saveJson():
+    return
+    
 
 class RunInfo(models.Model):
     ZERO = timedelta(0)
-    persons = models.CharField("Persons on shift ", max_length=200, blank=False)
+    persons = models.CharField("Persons on shift ", max_length=200, default=getPrevPersons, blank=False)
     runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
     starttime0 = models.DateTimeField("Run start time ", default=timezone.now(), blank=False)
     starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
