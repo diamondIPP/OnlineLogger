@@ -2,10 +2,10 @@
 {% for item in results %}
 <b><font color="red">Run: {{item.runnr}}</font></b><br>
 Persons on shift: {{item.persons}} <br>
-Run start time: {{item.starttime0}} <br>
-Beam stopper opening time: {{item.starttime1}} <br>
-Beam stopper open: {{item.starttime2}} <br>
-Beam stop time: {{item.endtime}} <br>
+Run start time: {{item.starttime0|date:'Y/m/d H:i:s'}} <br>
+Beam stopper opening time: {{item.starttime1|time:'H:i:s'}} <br>
+Beam stopper open: {{item.starttime2|time:'H:i:s'}} <br>
+Run stop time: {{item.endtime|date:'Y/m/d H:i:s'}} <br>
 Type of run: {{item.runtype}} <br>
 Maskfile: {{item.maskfile}} <br>
 Diamond 1: {{item.dia1}} <br>
