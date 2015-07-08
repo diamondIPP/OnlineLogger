@@ -70,5 +70,5 @@ class RunInfo(models.Model):
             actual_data = [d['fields'] for d in raw_data] #get what really matters without additional django fields
             output = json.dumps(list(actual_data), cls=DjangoJSONEncoder) #dump it to json (complicated due to datetime format (not iso))
             parsed = json.loads(output) #load string converted json file again
-            sanitized = json.dumps(parsed, indent=2, sort_keys=False) #and format it nicely
+            sanitized = json.dumps(parsed, indent=2, sort_keys=False) #and format it nicely, sorting not required
             out.write(sanitized)

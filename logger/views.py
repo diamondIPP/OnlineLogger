@@ -6,8 +6,8 @@ def index(request):
     return HttpResponse("hello world!")
 
 def detail(request, runnr):
-    info = get_object_or_404(RunInfo, pk=runnr)
-    return render(request, 'logger/detail.html', {'info':info})
+    item = get_object_or_404(RunInfo, pk=runnr)
+    return render(request, 'logger/detail.html', {'item':item})
 
 def all(request):
     results = list(RunInfo.objects.all())

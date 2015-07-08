@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from logger import views as logger_views
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^logger/', include('logger.urls')),
+    url(r'^$', logger_views.all), #homepage is the 'all page'
+    url(r'^admin/', include(admin.site.urls)), #admin site
+    url(r'^logger/', include('logger.urls')), #include the logger url page
+
 ]
