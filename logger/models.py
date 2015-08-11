@@ -23,6 +23,18 @@ def getPrevPersons():
         return pentry[len(pentry)-1].persons
     return
 
+def getPrevDiamond1():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia1
+    return
+
+def getPrevDiamond2():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia2
+    return
+
 
 class RunInfo(models.Model):
     global ZERO
@@ -36,15 +48,31 @@ class RunInfo(models.Model):
     TEST = 'test'
     SIGNAL = 'signal'
     PEDESTAL = 'pedestal'
+    TLU = 'tlu_no_handshare'
+    SHADOW = 'find_shadow'
     RUN_TYPES=(
         (TEST, 'test'),
         (SIGNAL, 'signal'),
         (PEDESTAL, 'pedestal'),
+        (TLU, 'tlu_no_handshake'),
+        (SHADOW, 'find_shadow'),
         )
     runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, blank=False)
+    DIAMONDS =(
+    	('II6-B2', 'II6-B2'),
+    	('II6-94', 'II6-94'),
+    	('II6-95', 'II6-95'),
+    	('II6-96', 'II6-96'),
+    	('II6-97', 'II6-97'),
+    	('II6-A0', 'II6-A0'),
+    	('A', 'A'),
+    	('B', 'B'),
+    	('D', 'D'),
+    	('S129', 'S129'),
+    	('other', 'other'),)
+    dia1 = models.CharField("Diamond 1 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
+    dia2 = models.CharField("Diamond 2 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)
     maskfile = models.CharField("Mask file ", max_length=200, blank=False)
-    dia1 = models.CharField("Diamond 1 ", max_length=200, default = "", blank=False)
-    dia2 = models.CharField("Diamond 2 ", max_length=200, default = "", blank=False)
     dia1hv = models.IntegerField("Diamond 1 high voltage [V] ", blank=False)
     dia2hv = models.IntegerField("Diamond 2 high voltage [V] ", blank=False)
     fs11 = models.IntegerField("FS11 setting [mm] ", blank=False)

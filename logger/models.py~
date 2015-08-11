@@ -1,8 +1,0 @@
-from django.db import models
-from django.utils import timezone
-
-class InputMask(models.Model):
-    persons = models.CharField("Persons on shift: " max_length=200)
-    date = models.DateField("Date: ", default=timezone.now)
-    time = models.TimeField("Time: ", default=timezone.now)
-    
