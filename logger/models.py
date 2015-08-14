@@ -40,7 +40,7 @@ class RunInfo(models.Model):
     global ZERO
     persons = models.CharField("Persons on shift ", max_length=200, default=getPrevPersons, blank=False)
     runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
-    starttime0 = models.DateTimeField("Run start time ", default=timezone.now(), blank=False)
+    starttime0 = models.DateTimeField("Run start time ", default=ZERO, blank=False)
     starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
     starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
     endtime = models.DateTimeField("Run stop time ", default=ZERO, blank=False)
@@ -50,15 +50,18 @@ class RunInfo(models.Model):
     PEDESTAL = 'pedestal'
     TLU = 'tlu_no_handshare'
     SHADOW = 'find_shadow'
+    RATE = 'rate_scan'
     RUN_TYPES=(
         (TEST, 'test'),
         (SIGNAL, 'signal'),
         (PEDESTAL, 'pedestal'),
-        (TLU, 'tlu_no_handshake'),
-        (SHADOW, 'find_shadow'),
+        (TLU, 'tlu no handshake'),
+        (SHADOW, 'find shadow'),
+        (RATE, 'rate scan')
         )
     runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, blank=False)
     DIAMONDS =(
+        ('---', '---'),
     	('II6-B2', 'II6-B2'),
     	('II6-94', 'II6-94'),
     	('II6-95', 'II6-95'),
@@ -73,17 +76,15 @@ class RunInfo(models.Model):
     dia1 = models.CharField("Diamond 1 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
     dia2 = models.CharField("Diamond 2 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)
     maskfile = models.CharField("Mask file ", max_length=200, blank=False)
-    dia1hv = models.IntegerField("Diamond 1 high voltage [V] ", blank=False)
-    dia2hv = models.IntegerField("Diamond 2 high voltage [V] ", blank=False)
-    fs11 = models.IntegerField("FS11 setting [mm] ", blank=False)
-    fs13 = models.IntegerField("FS13 setting [mm] ", blank=False)
+    dia1hv = models.FloatField("Diamond 1 high voltage [V] ", blank=False)
+    dia2hv = models.FloatField("Diamond 2 high voltage [V] ", blank=False)
+    fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
+    fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
     quadrupole = models.IntegerField("Quadrupole setting [%] ", blank=False)
     rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
     prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
-    TLUrate = models.PositiveIntegerField("TLU rate [Hz] ", blank=False)
     pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
-    aimedflux = models.PositiveIntegerField("Aimed flux [kHz]", blank=False)
-    measuredflux = models.PositiveIntegerField("Measured flux [kHz] ", blank=False)
+    measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
 
     def __unicode__(self):
         return str(self.runnr)
