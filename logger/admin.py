@@ -6,7 +6,7 @@ class RunInfoAdmin(admin.ModelAdmin):
         ('General run information', {'fields': ['persons', 'runnr', 'starttime0','starttime1', 'starttime2', 'endtime', 'runtype']}),
         ('Information about the diamond', {'fields': ['dia1', 'dia1hv', 'dia2', 'dia2hv','maskfile']}),
         ('Beam information', {'fields': ['fs11', 'fs13', 'quadrupole']}),
-        ('Rate information', {'fields': ['rawrate', 'prescaledrate', 'pulserrate', 'measuredflux']}),
+        ('Rate information', {'fields': ['rawrate', 'prescaledrate','tlu_input_rate', 'accepted_pulserrate', 'pulserrate', 'for1', 'for2', 'measuredflux']}),
         ('Comments', {'fields': ['comments']}),
         ]
 

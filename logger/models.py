@@ -35,16 +35,37 @@ def getPrevDiamond2():
         return pentry[len(pentry)-1].dia2
     return
 
+def getPrevVoltage1():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia1hv
+    return
+
+def getPrevVoltage2():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia2hv
+    return
+
+def getPrevMaskFile():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].maskfile
+    return    
+
+
+
 
 class RunInfo(models.Model):
     global ZERO
     persons = models.CharField("Persons on shift ", max_length=200, default=getPrevPersons, blank=False)
     runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
+    
     starttime0 = models.DateTimeField("Run start time ", default=ZERO, blank=False)
     starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
     starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
     endtime = models.DateTimeField("Run stop time ", default=ZERO, blank=False)
-    comments = models.TextField("Comments ", blank=True)
+    
     TEST = 'test'
     SIGNAL = 'signal'
     PEDESTAL = 'pedestal'
@@ -60,6 +81,7 @@ class RunInfo(models.Model):
         (RATE, 'rate scan')
         )
     runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, blank=False)
+    
     DIAMONDS =(
         ('---', '---'),
     	('II6-B2', 'II6-B2'),
@@ -75,16 +97,26 @@ class RunInfo(models.Model):
     	('other', 'other'),)
     dia1 = models.CharField("Diamond 1 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
     dia2 = models.CharField("Diamond 2 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)
-    maskfile = models.CharField("Mask file ", max_length=200, blank=False)
-    dia1hv = models.FloatField("Diamond 1 high voltage [V] ", blank=False)
-    dia2hv = models.FloatField("Diamond 2 high voltage [V] ", blank=False)
+    maskfile = models.CharField("Mask file ", max_length=200, default=getPrevMaskFile, blank=False)
+    dia1hv = models.FloatField("Diamond 1 high voltage [V] ", default=getPrevVoltage1, blank=False)
+    dia2hv = models.FloatField("Diamond 2 high voltage [V] ", default=getPrevVoltage2, blank=False)
+    
     fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
     quadrupole = models.IntegerField("Quadrupole setting [%] ", blank=False)
+    
     rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
+    measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
     prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
     pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
-    measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
+    accepted_pulserrate = models.PositiveIntegerField("Accepted pulser rate [Hz] ", blank=False)
+    tlu_input_rate = models.PositiveIntegerField("TLU input rate [Hz] ", blank=False)
+    for1 = models.PositiveIntegerField("Fast OR 1 [Hz] ", blank=False)
+    for2 = models.PositiveIntegerField("Fast OR 2 [Hz] ", blank=False)
+
+    comments = models.TextField("Comments ", blank=True)
+
+    
 
     def __unicode__(self):
         return str(self.runnr)
@@ -96,8 +128,22 @@ class RunInfo(models.Model):
         ###~~~~Create the JSON file~~~~###
         with open("outputfile.json", "w") as out:
             raw_data = serializers.serialize('python', RunInfo.objects.all())
-            actual_data = [d['fields'] for d in raw_data] #get what really matters without additional django fields
-            output = json.dumps(list(actual_data), cls=DjangoJSONEncoder) #dump it to json (complicated due to datetime format (not iso))
-            parsed = json.loads(output) #load string converted json file again
-            sanitized = json.dumps(parsed, indent=2, sort_keys=False) #and format it nicely, sorting not required
-            out.write(sanitized)
+            extracted_data = [{d['fields']['runnr']:d['fields']} for d in raw_data]           
+            output = json.dumps(extracted_data, cls=DjangoJSONEncoder, indent=2, sort_keys=True) #dump it to json (complicated due to datetime format (not iso))
+            out.write(output)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
