@@ -128,7 +128,11 @@ class RunInfo(models.Model):
         ###~~~~Create the JSON file~~~~###
         with open("outputfile.json", "w") as out:
             raw_data = serializers.serialize('python', RunInfo.objects.all())
+            
+
             extracted_data = [{d['fields']['runnr']:d['fields']} for d in raw_data]           
+            
+
             output = json.dumps(extracted_data, cls=DjangoJSONEncoder, indent=2, sort_keys=True) #dump it to json (complicated due to datetime format (not iso))
             out.write(output)
 
