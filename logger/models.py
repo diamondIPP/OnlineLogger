@@ -5,7 +5,7 @@ from django.core import serializers
 import os
 import json
 from django.core.serializers.json import DjangoJSONEncoder
-
+import time
 
 ZERO = timedelta(0)
 jfile = "run_log.json"
@@ -126,14 +126,16 @@ class RunInfo(models.Model):
         super(RunInfo, self).save(*args, **kwargs)
 
         ###~~~~Create the JSON file~~~~###
-        with open("outputfile.json", "w") as out:
+        with open("run_log.json", "w") as out:
             raw_data = serializers.serialize('python', RunInfo.objects.all())
-            
 
-            extracted_data = [{d['fields']['runnr']:d['fields']} for d in raw_data]           
-            
+            form_d = {}
+            for d in raw_data:
+                key = d['fields']['runnr']
+                runinfo = d['fields']
+                form_d[key] = runinfo
 
-            output = json.dumps(extracted_data, cls=DjangoJSONEncoder, indent=2, sort_keys=True) #dump it to json (complicated due to datetime format (not iso))
+            output = json.dumps(form_d, cls=DjangoJSONEncoder, indent=2, sort_keys=True) #dump it to json (complicated due to datetime format (not iso))
             out.write(output)
 
 
