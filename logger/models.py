@@ -53,8 +53,6 @@ def getPrevMaskFile():
         return pentry[len(pentry)-1].maskfile
     return    
 
-
-
 def getPrevHVSupply1():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
@@ -71,6 +69,18 @@ def getPrevRunType():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
         return pentry[len(pentry)-1].runtype
+    return
+
+def getPrevArea1():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia1area
+    return
+
+def getPrevArea2():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia2area
     return
 
 
@@ -144,10 +154,11 @@ class RunInfo(models.Model):
     maskfile = models.CharField("Mask file ", max_length=200, default=getPrevMaskFile, blank=False)
     dia1hv = models.FloatField("Diamond 1 high voltage [V] ", default=getPrevVoltage1, blank=False)
     dia2hv = models.FloatField("Diamond 2 high voltage [V] ", default=getPrevVoltage2, blank=False)
-    
+    dia1area = models.FloatField("Diamond 1 active pixels ", default=getPrevArea1, blank=True)
+    dia2area = models.FloatField("Diamond 2 active pixels ", default=getPrevArea2, blank=True)
+
     fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
-    #quadrupole = models.IntegerField("Quadrupole setting [%] ", blank=False)
     
     rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
     measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
