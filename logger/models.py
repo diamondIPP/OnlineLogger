@@ -91,14 +91,16 @@ class RunInfo(models.Model):
     runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
     
     starttime0 = models.DateTimeField("Run start time ", default=ZERO, blank=False)
-    starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
-    starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
+    #starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
+    #starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
     endtime = models.DateTimeField("Run stop time ", default=ZERO, blank=False)
     
     TEST = 'test'
     SIGNAL = 'signal'
     PEDESTAL = 'pedestal'
     TLU = 'tlu_no_handshare'
+    VOLTAGE_SCAN = 'voltage_scan'
+    SCHROTT = 'schrott'
     SHADOW = 'find_shadow'
     RATE = 'rate_scan'
     RUN_TYPES=(
@@ -106,29 +108,41 @@ class RunInfo(models.Model):
         (SIGNAL, 'signal'),
         (PEDESTAL, 'pedestal'),
         (TLU, 'tlu no handshake'),
-        (SHADOW, 'find shadow'),
+        (VOLTAGE_SCAN, 'voltage scan'),
+        (SCHROTT, 'schrott'),
         (RATE, 'rate scan')
         )
     runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, default=getPrevRunType, blank=False)
     
     DIAMONDS =(
         ('---', '---'),
-    	('II6-B2', 'II6-B2'),
-    	('II6-94', 'II6-94'),
-    	('II6-95', 'II6-95'),
-    	('II6-96', 'II6-96'),
-    	('II6-97', 'II6-97'),
-    	('II6-A0', 'II6-A0'),
-    	('A', 'A'),
-    	('B', 'B'),
-    	('D', 'D'),
-    	('S129', 'S129'),
+        ('II6-B2', 'II6-B2'),
+        ('II6-94', 'II6-94'),
+        ('II6-95', 'II6-95'),
+        ('II6-96', 'II6-96'),
+        ('II6-97', 'II6-97'),
+        ('II6-A0', 'II6-A0'),
+        ('II6-A2', 'II6-A2'),
+        ('II6-A7', 'II6-A7'),
+        ('A', 'A'),
+        ('B', 'B'),
+        ('D', 'D'),
+        ('S129', 'S129'),
         ('2A87-E', '2A87-E'),
         ('IIa-1', 'IIa-1'),
         ('IIa-2', 'IIa-2'),
         ('IIa-3', 'IIa-3'),
         ('IIa-5', 'IIa-5'),
-    	('other', 'other'),)
+        ('Higgs', 'Higgs'),
+        ('Einstein', 'Einstein'),
+        ('Dirac', 'Dirac'),
+        ('Heisenberg', 'Heisenberg'),
+        ('S83', 'S83'),
+        ('S97', 'S97'),
+        ('SiD1', 'SiD1'),
+        ('SiD2', 'SiD2'),
+        ('H0', 'H0'),
+        ('other', 'other'),)
 
 
     HV_SUPPLIES = (
@@ -160,14 +174,14 @@ class RunInfo(models.Model):
     fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
     
-    rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
-    measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
-    prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
-    pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
-    accepted_pulserrate = models.PositiveIntegerField("Accepted pulser rate [Hz] ", blank=False)
-    tlu_input_rate = models.PositiveIntegerField("TLU input rate [Hz] ", blank=False)
-    for1 = models.PositiveIntegerField("Fast OR 1 [Hz] ", blank=False)
-    for2 = models.PositiveIntegerField("Fast OR 2 [Hz] ", blank=False)
+    #rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
+    #measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
+    #prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
+    #pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
+    #accepted_pulserrate = models.PositiveIntegerField("Accepted pulser rate [Hz] ", blank=False)
+    #tlu_input_rate = models.PositiveIntegerField("TLU input rate [Hz] ", blank=False)
+    for1 = models.PositiveIntegerField("Fast OR Plane 1 [Hz] ", blank=False)
+    for2 = models.PositiveIntegerField("Fast OR Plane 2 [Hz] ", blank=False)
 
     comments = models.TextField("Comments ", blank=True)
 

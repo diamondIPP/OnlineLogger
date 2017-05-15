@@ -1,0 +1,23 @@
+{
+  "1": {
+    "comments": "", 
+    "dia1": "II6-96", 
+    "dia1area": 1.0, 
+    "dia1hv": 2.0, 
+    "dia1supply": "7-2", 
+    "dia2": "A", 
+    "dia2area": -2.0, 
+    "dia2hv": 2.0, 
+    "dia2supply": "7-1", 
+    "endtime": "2017-05-15T19:18:45Z", 
+    "for1": 44, 
+    "for2": 44, 
+    "fs11": 44.0, 
+    "fs13": 44.0, 
+    "maskfile": "dgfdsf", 
+    "persons": "adfa", 
+    "runnr": 1, 
+    "runtype": "test", 
+    "starttime0": "2017-05-15T19:18:44Z"
+  }
+}
