@@ -112,7 +112,7 @@ class RunInfo(models.Model):
         (SCHROTT, 'schrott'),
         (RATE, 'rate scan')
         )
-    runtype = models.CharField("Run type ", max_length=10, choices=RUN_TYPES, default=getPrevRunType, blank=False)
+    runtype = models.CharField("Run type ", max_length=20, choices=RUN_TYPES, default=getPrevRunType, blank=False)
     
     DIAMONDS =(
         ('---', '---'),
@@ -127,7 +127,6 @@ class RunInfo(models.Model):
         ('A', 'A'),
         ('B', 'B'),
         ('D', 'D'),
-        ('S129', 'S129'),
         ('2A87-E', '2A87-E'),
         ('IIa-1', 'IIa-1'),
         ('IIa-2', 'IIa-2'),
@@ -137,11 +136,20 @@ class RunInfo(models.Model):
         ('Einstein', 'Einstein'),
         ('Dirac', 'Dirac'),
         ('Heisenberg', 'Heisenberg'),
+        ('S129', 'S129'),
         ('S83', 'S83'),
         ('S97', 'S97'),
         ('SiD1', 'SiD1'),
         ('SiD2', 'SiD2'),
+	('SiD6', 'SiD6'),
         ('H0', 'H0'),
+        ('H0-1', 'H0-1'),
+        ('H0-2', 'H0-2'),
+        ('H0-3', 'H0-3'),
+        ('H0-4', 'H0-4'),
+        ('H0-5', 'H0-5'),
+        ('II6-E5', 'II6-E5'),
+        ('II6-E5-3', 'II6-E5-3'),
         ('other', 'other'),)
 
 
@@ -153,6 +161,7 @@ class RunInfo(models.Model):
         ('4', 'HV4'), 
         ('5', 'HV5'), 
         ('6', 'HV6'), 
+	('7-0', 'HV7-CH0'),
         ('7-1', 'HV7-CH1'), 
         ('7-2', 'HV7-CH2'),
         ('7-3', 'HV7-CH3'),
