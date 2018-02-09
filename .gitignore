@@ -27,6 +27,8 @@
 *.sql
 *.sqlite
 *.sqlite3
+*/migrations/
+run_log.json
  
 # OS generated files #
 ######################
