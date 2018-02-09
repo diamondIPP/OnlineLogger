@@ -124,6 +124,8 @@ class RunInfo(models.Model):
         ('II6-A0', 'II6-A0'),
         ('II6-A2', 'II6-A2'),
         ('II6-A7', 'II6-A7'),
+        ('II6-B0', 'II6-B0'),
+        ('II6-B6', 'II6-B6'),
         ('A', 'A'),
         ('B', 'B'),
         ('D', 'D'),
@@ -150,6 +152,8 @@ class RunInfo(models.Model):
         ('H0-5', 'H0-5'),
         ('II6-E5', 'II6-E5'),
         ('II6-E5-3', 'II6-E5-3'),
+        ('L100', 'L100'),
+        ('CMS04', 'CMS04'),
         ('other', 'other'),)
 
 
