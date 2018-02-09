@@ -35,6 +35,22 @@ def getPrevDiamond2():
         return pentry[len(pentry)-1].dia2
     return
 
+def getPrevAtt1():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_dia1 if len(pentry) else None
+
+def getPrevAtt2():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_dia2 if len(pentry) else None
+
+def getPrevPulserAtt1():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_pul1 if len(pentry) else None
+
+def getPrevPulserAtt2():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_pul2 if len(pentry) else None
+
 def getPrevVoltage1():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
@@ -178,20 +194,33 @@ class RunInfo(models.Model):
         ('7-5', 'HV7-CH5'),
         ('8', 'HV8'),)
 
+    ATTENUATORS = (
+        ('---', '---'),
+        ('None', 'None'),
+        ('6dB_1', '6dB_1'),
+        ('6dB_2', '6dB_2'),
+        ('6dB_3', '6dB_3'),
+        ('10dB_1', '10dB_1'),
+        ('20dB_1', '20dB_1'),)
 
-    dia1 = models.CharField("Diamond 1 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
-    dia2 = models.CharField("Diamond 2 ", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)   
-    dia1supply = models.CharField("Diamond 1 HV supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply1, blank=False)
-    dia2supply = models.CharField("Diamond 2 HV supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply2, blank=False)
-    maskfile = models.CharField("Mask file ", max_length=200, default=getPrevMaskFile, blank=False)
-    dia1hv = models.FloatField("Diamond 1 high voltage [V] ", default=getPrevVoltage1, blank=False)
-    dia2hv = models.FloatField("Diamond 2 high voltage [V] ", default=getPrevVoltage2, blank=False)
-    dia1area = models.FloatField("Diamond 1 active pixels ", default=getPrevArea1, blank=True)
-    dia2area = models.FloatField("Diamond 2 active pixels ", default=getPrevArea2, blank=True)
+
+    dia1 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
+    dia2 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)   
+    dia1supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply1, blank=False)
+    dia2supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply2, blank=False)
+    maskfile = models.CharField("Mask File ", max_length=200, default=getPrevMaskFile, blank=False)
+    dia1hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage1, blank=False)
+    dia2hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage2, blank=False)
+    att_dia1 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt1, blank=False)
+    att_dia2 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt2, blank=False)
+    att_pul1 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt1, blank=False)
+    att_pul2 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt2, blank=False)
 
     fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
     
+    #dia2area = models.FloatField("Active Pixels ", default=getPrevArea2, blank=True)
+    #dia1area = models.FloatField("Active Pixels ", default=getPrevArea1, blank=True)
     #rawrate = models.PositiveIntegerField("Raw rate [Hz] ",  blank=False)
     #measuredflux = models.FloatField("Measured flux [kHz/sqcm] ", blank=False)
     #prescaledrate = models.PositiveIntegerField("Prescaled rate [Hz] ", blank=False)
@@ -218,25 +247,15 @@ class RunInfo(models.Model):
 
             form_d = {}
             for d in raw_data:
-                key = d['fields']['runnr']
+                run_number = d['fields']['runnr']
                 runinfo = d['fields']
-                form_d[key] = runinfo
+                new_run_info = {}
+                for key, value in runinfo.iteritems():
+                    if 'att' in key and value == '---':
+                        continue
+                    new_run_info[key] = value
+                form_d[run_number] = new_run_info
 
             output = json.dumps(form_d, cls=DjangoJSONEncoder, indent=2, sort_keys=True) #dump it to json (complicated due to datetime format (not iso))
             out.write(output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
