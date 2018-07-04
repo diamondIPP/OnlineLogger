@@ -160,6 +160,7 @@ class RunInfo(models.Model):
         ('SiD1', 'SiD1'),
         ('SiD2', 'SiD2'),
 	('SiD6', 'SiD6'),
+	('SiD7', 'SiD7'),
         ('H0', 'H0'),
         ('H0-1', 'H0-1'),
         ('H0-2', 'H0-2'),
@@ -227,8 +228,8 @@ class RunInfo(models.Model):
     #pulserrate = models.PositiveIntegerField("Pulser rate [Hz] ", blank=False)
     #accepted_pulserrate = models.PositiveIntegerField("Accepted pulser rate [Hz] ", blank=False)
     #tlu_input_rate = models.PositiveIntegerField("TLU input rate [Hz] ", blank=False)
-    for1 = models.PositiveIntegerField("Fast OR Plane 1 [Hz] ", blank=False)
-    for2 = models.PositiveIntegerField("Fast OR Plane 2 [Hz] ", blank=False)
+    for1 = models.PositiveIntegerField("Fast OR Plane 2 [Hz] ", blank=False)
+    for2 = models.PositiveIntegerField("Fast OR Plane 3 [Hz] ", blank=False)
 
     comments = models.TextField("Comments ", blank=True)
 
