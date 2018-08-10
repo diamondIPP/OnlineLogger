@@ -19,7 +19,6 @@ from logger import views as logger_views
 
 urlpatterns = [
     url(r'^$', logger_views.all), #homepage is the 'all page'
-    url(r'^admin/', include(admin.site.urls)), #admin site
+    url(r'^admin/', admin.site.urls), #admin site
     url(r'^logger/', include('logger.urls')), #include the logger url page
-
 ]
