@@ -121,12 +121,12 @@ class RunInfo(models.Model):
     RATE = 'rate_scan'
     RUN_TYPES=(
         (TEST, 'test'),
-        (SIGNAL, 'signal'),
-        (PEDESTAL, 'pedestal'),
-        (TLU, 'tlu no handshake'),
+        (RATE, 'rate scan'),
         (VOLTAGE_SCAN, 'voltage scan'),
+        ('shadow', 'find shadow'),
+        ('pumping', 'pumping'),
         (SCHROTT, 'schrott'),
-        (RATE, 'rate scan')
+        ('crap', 'crap')
         )
     runtype = models.CharField("Run type ", max_length=20, choices=RUN_TYPES, default=getPrevRunType, blank=False)
     
@@ -174,8 +174,14 @@ class RunInfo(models.Model):
         ('H0-5', 'H0-5'),
         ('II6-E5', 'II6-E5'),
         ('II6-E5-3', 'II6-E5-3'),
+        ('D8','D8'),
         ('L100', 'L100'),
+        ('CMS01', 'CMS01'),
+        ('CMS02', 'CMS02'),
         ('CMS04', 'CMS04'),
+        ('BCMPrime', 'BCMPrime'),
+        ('BCMPrime-C1', 'BCMPrime-C1'),
+        ('BCMPrime-C2', 'BCMPrime-C2'),
         ('other', 'other'),)
 
 
@@ -228,8 +234,8 @@ class RunInfo(models.Model):
     att_pul1 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt1, blank=False)
     att_pul2 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt2, blank=False)
 
-    fs11 = models.FloatField("FS11 setting [steps] ", blank=False)
-    fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
+    fs11 = models.FloatField("FS11(l/r) setting [steps] ", blank=False)
+    fs13 = models.FloatField("FS11(o/u) setting [steps] ", blank=False)
     
     #dia2area = models.FloatField("Active Pixels ", default=getPrevArea2, blank=True)
     #dia1area = models.FloatField("Active Pixels ", default=getPrevArea1, blank=True)
