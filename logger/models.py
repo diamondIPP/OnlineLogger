@@ -235,7 +235,7 @@ class RunInfo(models.Model):
     att_pul2 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt2, blank=False)
 
     fs11 = models.FloatField("FS11(l/r) setting [steps] ", blank=False)
-    fs13 = models.FloatField("FS11(o/u) setting [steps] ", blank=False)
+    fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
     
     #dia2area = models.FloatField("Active Pixels ", default=getPrevArea2, blank=True)
     #dia1area = models.FloatField("Active Pixels ", default=getPrevArea1, blank=True)
