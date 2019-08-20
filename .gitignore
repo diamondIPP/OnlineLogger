@@ -29,6 +29,7 @@
 *.sqlite3
 */migrations/
 run_log.json
+.idea/
  
 # OS generated files #
 ######################
