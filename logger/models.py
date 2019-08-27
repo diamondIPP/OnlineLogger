@@ -1,11 +1,8 @@
 from django.db import models
-from django.utils import timezone
 from datetime import timedelta
 from django.core import serializers
-import os
 import json
 from django.core.serializers.json import DjangoJSONEncoder
-import time
 
 ZERO = timedelta(0)
 jfile = "run_log.json"
@@ -15,6 +12,10 @@ def getPrevRunNumber():
     if len(pentry) > 0:
         return (pentry[len(pentry)-1].runnr + 1)
     return 1
+
+def get_previous_momentum():
+    pentry = RunInfo.objects.all()
+    return (pentry[len(pentry) - 1].momentum) if len(pentry) else None
 
 
 def getPrevPersons():
@@ -105,7 +106,8 @@ class RunInfo(models.Model):
     global ZERO
     persons = models.CharField("Persons on shift ", max_length=200, default=getPrevPersons, blank=False)
     runnr = models.PositiveIntegerField("Run number ", default = getPrevRunNumber, blank=False)
-    
+    momentum = models.PositiveIntegerField("Pion Momentum [MeV/c]", default = get_previous_momentum, blank=False)
+
     starttime0 = models.DateTimeField("Run start time ", default=ZERO, blank=False)
     #starttime1 = models.TimeField("Beam stopper opening time ", default=ZERO, blank=True)
     #starttime2 = models.TimeField("Beam stopper open ", default=ZERO, blank=True)
@@ -126,6 +128,7 @@ class RunInfo(models.Model):
         ('shadow', 'find shadow'),
         ('pumping', 'pumping'),
         (SCHROTT, 'schrott'),
+        ('p-scan', 'momentum scan'),
         ('crap', 'crap')
         )
     runtype = models.CharField("Run type ", max_length=20, choices=RUN_TYPES, default=getPrevRunType, blank=False)
