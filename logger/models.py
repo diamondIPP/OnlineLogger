@@ -36,6 +36,12 @@ def getPrevDiamond2():
         return pentry[len(pentry)-1].dia2
     return
 
+def getPrevDiamond3():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia3
+    return
+
 def getPrevAtt1():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_dia1 if len(pentry) else None
@@ -44,6 +50,10 @@ def getPrevAtt2():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_dia2 if len(pentry) else None
 
+def getPrevAtt3():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_dia3 if len(pentry) else None
+
 def getPrevPulserAtt1():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_pul1 if len(pentry) else None
@@ -51,6 +61,10 @@ def getPrevPulserAtt1():
 def getPrevPulserAtt2():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_pul2 if len(pentry) else None
+
+def getPrevPulserAtt3():
+    pentry = RunInfo.objects.all()
+    return pentry[len(pentry) - 1].att_pul3 if len(pentry) else None
 
 def getPrevVoltage1():
     pentry = RunInfo.objects.all()
@@ -62,6 +76,12 @@ def getPrevVoltage2():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
         return pentry[len(pentry)-1].dia2hv
+    return
+
+def getPrevVoltage3():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia3hv
     return
 
 def getPrevMaskFile():
@@ -80,6 +100,12 @@ def getPrevHVSupply2():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
         return pentry[len(pentry)-1].dia2supply
+    return
+
+def getPrevHVSupply3():
+    pentry = RunInfo.objects.all()
+    if len(pentry) > 0:
+        return pentry[len(pentry)-1].dia3supply
     return
 
 def getPrevRunType():
@@ -182,10 +208,15 @@ class RunInfo(models.Model):
         ('II6-E5', 'II6-E5'),
         ('II6-E5-3', 'II6-E5-3'),
         ('D8','D8'),
+        ('D2', 'D2'),
         ('L100', 'L100'),
         ('CMS01', 'CMS01'),
         ('CMS02', 'CMS02'),
         ('CMS04', 'CMS04'),
+        ('8722', '8722'),
+        ('8723', '8723'),
+        ('9220', '9220'),
+        ('9273', '9273'),
         ('BCMPrime', 'BCMPrime'),
         ('BCMPrime-C1', 'BCMPrime-C1'),
         ('BCMPrime-C2', 'BCMPrime-C2'),
@@ -231,15 +262,20 @@ class RunInfo(models.Model):
 
     dia1 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
     dia2 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)   
+    dia3 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond3, blank=False)
     dia1supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply1, blank=False)
     dia2supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply2, blank=False)
+    dia3supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply3, blank=False)
     maskfile = models.CharField("Mask File ", max_length=200, default=getPrevMaskFile, blank=False)
     dia1hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage1, blank=False)
     dia2hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage2, blank=False)
+    dia3hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage3, blank=False)
     att_dia1 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt1, blank=False)
     att_dia2 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt2, blank=False)
+    att_dia3 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt3, blank=False)
     att_pul1 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt1, blank=False)
     att_pul2 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt2, blank=False)
+    att_pul3 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt3, blank=False)
 
     fs11 = models.FloatField("FS11(l/r) setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
