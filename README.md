@@ -10,10 +10,13 @@ Django based online logger for our beam tests.
 
 
 ### Run
-<pre><code> python manage.py runserver <ip>:8000 </code></pre>
+<pre><code> python manage.py runserver &ltip&gt:8000 </code></pre>
 
 
 ### Reload after major project changes
  - if you add fields, eg, 
  - changing names does not require this
 <pre><code> reload_db.sh </code></pre>
+
+### Edit fields
+<pre><code> vim logger/models.py </code></pre>
