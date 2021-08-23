@@ -1,19 +1,21 @@
-<b><font color="red">Run: {{item.runnr}}</font></b><br>
-Persons on shift: {{item.persons}} <br>
-Run start time: {{item.starttime0|date:'Y/m/d H:i:s'}} <br>
-Run stop time: {{item.endtime|date:'Y/m/d H:i:s'}} <br>
-Type of run: {{item.runtype}} <br>
-Maskfile: {{item.maskfile}} <br>
-Diamond 1: {{item.dia1}} <br>
-Diamond 2: {{item.dia2}} <br>
-HV Diamond 1: {{item.dia1hv}} <br>
-HV Diamond 2: {{item.dia2hv}} <br>
-FS11: {{item.fs11}} <br>
-FS13: {{item.fs13}} <br>
-<!--Quadrupole settings: {{item.quadrupole}} <br> -->
-Raw rate: {{item.rawrate}} <br>
-Prescaled rate: {{item.prescaledrate}} <br>
-Pulser rate: {{item.pulserrate}} <br>
-Measured flux: {{item.measuredflux}} <br>
-Comments: {{item.comments}} <br>
+<h3 style="color:red">Run: {{ runinfo.runnr }}</h3>
+<ul>
+    <li> Persons on shift: {{runinfo.persons}} </li>
+    <li> Run start time: {{runinfo.starttime0|date:'Y/m/d H:i:s'}} </li>
+    <li> Run stop time: {{runinfo.endtime|date:'Y/m/d H:i:s'}} </li>
+    <li> Type of run: {{runinfo.runtype}} </li>
+    <li> Maskfile: {{runinfo.maskfile}} </li>
+    <li> Diamond 1: {{runinfo.dia1}} </li>
+    <li> Diamond 2: {{runinfo.dia2}} </li>
+    <li> HV Diamond 1: {{runinfo.dia1hv}} </li>
+    <li> HV Diamond 2: {{runinfo.dia2hv}} </li>
+    <li> FS11: {{runinfo.fs11}} </li>
+    <li> FS13: {{runinfo.fs13}} </li>
+    <!-- <li> Quadrupole settings: {{runinfo.quadrupole}} <li> -->
+    <li> Raw rate: {{runinfo.rawrate}} </li>
+    <li> Prescaled rate: {{runinfo.prescaledrate}} </li>
+    <li> Pulser rate: {{runinfo.pulserrate}} </li>
+    <li> Measured flux: {{runinfo.measuredflux}} </li>
+    <li> Comments: {{runinfo.comments}} </li>
+</ul>
 <br><br>

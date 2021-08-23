@@ -1,0 +1,10 @@
+{% if latest_run_logs %}
+    <h3> Latest Run Logs: </h3>
+    <ul>
+    {% for runinfo in latest_run_logs %}
+        <li><a href="{% url 'logger:detail' runinfo.runnr %}"> {{ runinfo.runnr }} </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
