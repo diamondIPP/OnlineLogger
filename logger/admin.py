@@ -1,5 +1,5 @@
 from django.contrib import admin
-from logger.models import RunInfo, DUT, Dir, json, join, dirname, Config, partial
+from logger.models import RunInfo, DUT, Dir, json, join, dirname, Config
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import ModelForm
@@ -7,6 +7,7 @@ from django.forms import ModelForm
 
 class AlwaysChangedModelForm(ModelForm):
 
+    # return always true, such that the DUTs are added to each run info even if no changes were made
     def has_changed(self):
         return True
 
