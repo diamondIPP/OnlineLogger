@@ -17,6 +17,7 @@ Diamond 2 active pixels: {{item.dia2area}} <br>
 HV Diamond 2: {{item.dia2hv}} <br>
 HV Supply Diamond 2 {{item.dia2supply}} <br>
 
+
 FS11: {{item.fs11}} <br>
 FS13: {{item.fs13}} <br>
 Quadrupole settings: {{item.quadrupole}} <br>

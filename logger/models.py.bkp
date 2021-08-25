@@ -36,12 +36,6 @@ def getPrevDiamond2():
         return pentry[len(pentry)-1].dia2
     return
 
-def getPrevDiamond3():
-    pentry = RunInfo.objects.all()
-    if len(pentry) > 0:
-        return pentry[len(pentry)-1].dia3
-    return
-
 def getPrevAtt1():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_dia1 if len(pentry) else None
@@ -50,10 +44,6 @@ def getPrevAtt2():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_dia2 if len(pentry) else None
 
-def getPrevAtt3():
-    pentry = RunInfo.objects.all()
-    return pentry[len(pentry) - 1].att_dia3 if len(pentry) else None
-
 def getPrevPulserAtt1():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_pul1 if len(pentry) else None
@@ -61,10 +51,6 @@ def getPrevPulserAtt1():
 def getPrevPulserAtt2():
     pentry = RunInfo.objects.all()
     return pentry[len(pentry) - 1].att_pul2 if len(pentry) else None
-
-def getPrevPulserAtt3():
-    pentry = RunInfo.objects.all()
-    return pentry[len(pentry) - 1].att_pul3 if len(pentry) else None
 
 def getPrevVoltage1():
     pentry = RunInfo.objects.all()
@@ -76,12 +62,6 @@ def getPrevVoltage2():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
         return pentry[len(pentry)-1].dia2hv
-    return
-
-def getPrevVoltage3():
-    pentry = RunInfo.objects.all()
-    if len(pentry) > 0:
-        return pentry[len(pentry)-1].dia3hv
     return
 
 def getPrevMaskFile():
@@ -100,12 +80,6 @@ def getPrevHVSupply2():
     pentry = RunInfo.objects.all()
     if len(pentry) > 0:
         return pentry[len(pentry)-1].dia2supply
-    return
-
-def getPrevHVSupply3():
-    pentry = RunInfo.objects.all()
-    if len(pentry) > 0:
-        return pentry[len(pentry)-1].dia3supply
     return
 
 def getPrevRunType():
@@ -162,29 +136,7 @@ class RunInfo(models.Model):
     DIAMONDS =(
         ('---', '---'),
         ('II6-B2', 'II6-B2'),
-        ('LSC03_digital', 'LSC03_digital'),
-        ('LSC03_analog', 'LSC03_analog'),
-        ("Si_CMS_34252_24_CH0_analog", "Si_CMS_34252_24_CH0_analog"),
-        ("Si_CMS_34252_24_CH0_digital", "Si_CMS_34252_24_CH0_digital"),
-        ("Si_CMS_34252_24_CH1_analog", "Si_CMS_34252_24_CH1_analog"),
-        ("Si_CMS_34252_24_CH1_digital", "Si_CMS_34252_24_CH1_digital"),
         ('II6-94', 'II6-94'),
-        ('ET02-3D100-UL-digital', 'ET02-3D100-UL-digital'),
-        ('ET02-3D50-UR-digital', 'ET02-3D50-UR-digital'),
-        ('ET02-3D50-LR-digital', 'ET02_3D50-LR-digital'),
-        ('ET02-3D100-LL-digital', 'ET02-3D100-LL-digital'),
-        ('ET02-3D100-UL-analog', 'ET02-3D100-UL-analog'),
-        ('ET02-3D50-UR-analog', 'ET02-3D50-UR-analog'),
-        ('ET02-3D50-LR-analog', 'ET02-3D50-LR-analog'),
-        ('ET02-3D100-LL-analog', 'ET02-3D100-LL-analog'),
-        ('J2_CH0_GR_analog', 'J2_CH0_GR_analog'),
-        ('J2_CH0_GR_digital', 'J2_CH0_GR_digital'),
-        ('J2_CH1_BP_analog', 'J2_CH1_BP_analog'),
-        ('J2_CH1_BP_digital', 'J2_CH1_BP_digital'),
-        ('J2_CH2_MP_analog', 'J2_CH2_MP_analog'),
-        ('J2_CH2_MP_digital', 'J2_CH2_MP_digital'),
-        ('J2_CH3_SP_analog', 'J2_CH3_SP_analog'),
-        ('J2_CH3_SP_digital', 'J2_CH3_SP_digital'),
         ('II6-95', 'II6-95'),
         ('II6-96', 'II6-96'),
         ('II6-97', 'II6-97'),
@@ -230,7 +182,6 @@ class RunInfo(models.Model):
         ('II6-E5', 'II6-E5'),
         ('II6-E5-3', 'II6-E5-3'),
         ('D8','D8'),
-        ('D2', 'D2'),
         ('L100', 'L100'),
         ('CMS01', 'CMS01'),
         ('CMS02', 'CMS02'),
@@ -247,12 +198,6 @@ class RunInfo(models.Model):
 
     HV_SUPPLIES = (
         ('0', '---'),
-        ('0-0', 'HV0-CH0'),
-        ('0-1', 'HV0-CH1'),
-        ('0-2', 'HV0-CH2'),
-        ('0-3', 'HV0-CH3'),
-        ('0-4', 'HV0-CH4'),
-        ('0-5', 'HV0-CH5'),
         ('1-0', 'HV1-CH0'),
         ('1-1', 'HV1-CH1'),
         ('1-2', 'HV1-CH2'),
@@ -290,20 +235,15 @@ class RunInfo(models.Model):
 
     dia1 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond1, blank=False)
     dia2 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond2, blank=False)   
-    dia3 = models.CharField("Name", max_length=200, choices=DIAMONDS, default=getPrevDiamond3, blank=False)
     dia1supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply1, blank=False)
     dia2supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply2, blank=False)
-    dia3supply = models.CharField("HV Supply ", max_length=4, choices=HV_SUPPLIES, default=getPrevHVSupply3, blank=False)
     maskfile = models.CharField("Mask File ", max_length=200, default=getPrevMaskFile, blank=False)
     dia1hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage1, blank=False)
     dia2hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage2, blank=False)
-    dia3hv = models.FloatField("High Voltage [V] ", default=getPrevVoltage3, blank=False)
     att_dia1 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt1, blank=False)
     att_dia2 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt2, blank=False)
-    att_dia3 = models.CharField('Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevAtt3, blank=False)
     att_pul1 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt1, blank=False)
     att_pul2 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt2, blank=False)
-    att_pul3 = models.CharField('Pulser Attenuator', max_length=200, choices=ATTENUATORS, default=getPrevPulserAtt3, blank=False)
 
     fs11 = models.FloatField("FS11(l/r) setting [steps] ", blank=False)
     fs13 = models.FloatField("FS13 setting [steps] ", blank=False)
