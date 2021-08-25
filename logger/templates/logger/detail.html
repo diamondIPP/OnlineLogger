@@ -1,19 +1,14 @@
-<b><font color="red">Run: {{item.runnr}}</font></b><br>
-Persons on shift: {{item.persons}} <br>
-Run start time: {{item.starttime0|date:'Y/m/d H:i:s'}} <br>
-Run stop time: {{item.endtime|date:'Y/m/d H:i:s'}} <br>
-Type of run: {{item.runtype}} <br>
-Maskfile: {{item.maskfile}} <br>
-Diamond 1: {{item.dia1}} <br>
-Diamond 2: {{item.dia2}} <br>
-HV Diamond 1: {{item.dia1hv}} <br>
-HV Diamond 2: {{item.dia2hv}} <br>
-FS11: {{item.fs11}} <br>
-FS13: {{item.fs13}} <br>
-<!--Quadrupole settings: {{item.quadrupole}} <br> -->
-Raw rate: {{item.rawrate}} <br>
-Prescaled rate: {{item.prescaledrate}} <br>
-Pulser rate: {{item.pulserrate}} <br>
-Measured flux: {{item.measuredflux}} <br>
-Comments: {{item.comments}} <br>
-<br><br>
+<h3 style="color:red">Run: {{ run }}</h3>
+<ul>
+    {% for k, v in runinfo.items %}
+        <li> {{ k }}: {{ v }} </li>
+    {% endfor %}
+    {% for dut in duts %}
+        <li> DUT {{ forloop.counter }} </li>
+        <ul>
+            {% for k, v in dut.items %}
+                <li> {{ k }}: {{ v }} </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>

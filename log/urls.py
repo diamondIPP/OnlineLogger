@@ -13,13 +13,12 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import path, include
 from logger import views as logger_views
 
 urlpatterns = [
-    url(r'^$', logger_views.all), #homepage is the 'all page'
-    url(r'^admin/', include(admin.site.urls)), #admin site
-    url(r'^logger/', include('logger.urls')), #include the logger url page
-
+    path('', logger_views.IndexView.as_view()),  # homepage is the last logs page
+    path('admin/', admin.site.urls),             # admin site
+    path('logger/', include('logger.urls'))      # include the logger url page
 ]

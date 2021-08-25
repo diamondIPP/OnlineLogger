@@ -1,0 +1,10 @@
+{% if latest_run_logs %}
+    <h3> Latest Run Logs: </h3>
+    <ul>
+    {% for runinfo in latest_run_logs %}
+        <li><a href="{% url 'logger:detail' runinfo.runnr %}"> Run {{ runinfo.runnr }} </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No run was logged yet ...</p>
+{% endif %}
