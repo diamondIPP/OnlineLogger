@@ -2,7 +2,7 @@
     <h3> Latest Run Logs: </h3>
     <ul>
     {% for runinfo in latest_run_logs %}
-        <li><a href="{% url 'logger:detail' runinfo.runnr %}"> {{ runinfo.runnr }} </a></li>
+        <li><a href="{% url 'logger:detail' runinfo.runnr %}"> Run {{ runinfo.runnr }} </a></li>
     {% endfor %}
     </ul>
 {% else %}
