@@ -4,7 +4,12 @@ from config.config import *
 from os.path import dirname, realpath, join
 
 Dir = dirname(realpath(__file__))
-Count = 0
+DUTNr = 0
+
+
+def reset_dut_nr():
+    global DUTNr
+    DUTNr = 0
 
 
 def get_latest_(field):
@@ -48,20 +53,19 @@ class RunInfo(models.Model):
         return str(self.runnr)
 
 
-def get_latest_dut_(field):
-    if not DUT.objects.count() or RunInfo.objects.count() < 2:
+def get_latest_dut_(field, increment=False):
+    if not DUT.objects.count() or not RunInfo.objects.count():
         return
-    global Count
     r = RunInfo.objects.latest('runnr')
     n_duts = len(DUT.objects.filter(runinfo=r.id))
-    if field == 'dia':
-        Count += 1
-    duts = DUT.objects.all()
-    return getattr(duts[len(duts) - 1 - (Count % n_duts)], field) if n_duts else None
+    global DUTNr
+    dut_nr = DUTNr
+    DUTNr += 1 if increment else 0
+    return getattr(r.dut_set.all()[(dut_nr - 2) % n_duts], field) if n_duts else None
 
 
-def get_latest_dut(field):
-    return partial(get_latest_dut_, field)
+def get_latest_dut(field, increment=False):
+    return partial(get_latest_dut_, field, increment)
 
 
 class DUT(models.Model):
@@ -71,7 +75,7 @@ class DUT(models.Model):
     diasupply = models.CharField('HV Supply ', max_length=4, choices=get_hv_supplies(RunInfo.CONFIGFILE), default=get_latest_dut('diasupply'), blank=False)
     diahv = models.FloatField('High Voltage [V]', default=get_latest_dut('diahv'), blank=False)
     att_dia = models.CharField('Attenuator', max_length=200, choices=get_attenuators(RunInfo.CONFIGFILE), default=get_latest_dut('att_dia'), blank=False)
-    att_pul = models.CharField('Pulser Attenuator', max_length=200, choices=get_attenuators(RunInfo.CONFIGFILE), default=get_latest_dut('att_pul'), blank=False)
+    att_pul = models.CharField('Pulser Attenuator', max_length=200, choices=get_attenuators(RunInfo.CONFIGFILE), default=get_latest_dut('att_pul', increment=True), blank=False)
 
     def __str__(self):
         return f'#{self.pk}'

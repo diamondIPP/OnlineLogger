@@ -1,5 +1,5 @@
 from django.contrib import admin
-from logger.models import RunInfo, DUT, Dir, json, join, dirname, Config
+from logger.models import RunInfo, DUT, Dir, json, join, dirname, Config, reset_dut_nr
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import ModelForm
@@ -44,11 +44,12 @@ class RunInfoAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.inlines = [ChangeInline, ]
-        return super(RunInfoAdmin, self).change_view(request, object_id)
+        return super(RunInfoAdmin, self).change_view(request, object_id, form_url='', extra_context=None)
 
     def add_view(self, request, form_url='', extra_context=None):
         self.inlines = [DUTInline, ]
-        return super(RunInfoAdmin, self).add_view(request)
+        reset_dut_nr()
+        return super(RunInfoAdmin, self).add_view(request, form_url='', extra_context=None)
 
 
 def save_json():
