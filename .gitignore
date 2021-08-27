@@ -4,6 +4,7 @@
 !.ini
 !*.py
 !*.sh
+!.md
 
 !old-logs/*.json
 !.git*
