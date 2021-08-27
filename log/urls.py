@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from logger import views as logger_views
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
     path('', logger_views.IndexView.as_view()),  # homepage is the last logs page
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
     path('admin/', admin.site.urls),             # admin site
     path('logger/', include('logger.urls'))      # include the logger url page
 ]

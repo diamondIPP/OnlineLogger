@@ -1,10 +1,12 @@
 *
 !*/
 
-!.ini
+!*.html
+!*.ini
 !*.py
 !*.sh
-!.md
+!.*md
+!*.ico
 
 !old-logs/*.json
 !.git*

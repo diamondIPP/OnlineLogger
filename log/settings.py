@@ -30,7 +30,7 @@ ROOT_URLCONF = 'log.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [join(BASE_DIR, 'templates')],
+        # 'DIRS': [join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,4 +67,5 @@ ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.103', 'localhost', '127.0.0.1', '192.168.
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+STATICFILES_DIRS = [join(BASE_DIR, 'static')]
 STATIC_URL = '/static/'
