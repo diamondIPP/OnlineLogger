@@ -5,6 +5,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.forms import ModelForm
 
 
+admin.site.site_header = 'PSI Test Beam Run Logger'
+admin.site.site_title = 'PSI Logger'
+
+
 class AlwaysChangedModelForm(ModelForm):
 
     # return always true, such that the DUTs are added to each run info even if no changes were made
